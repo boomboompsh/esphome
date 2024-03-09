@@ -32,7 +32,7 @@ void CTClampSensor::update() {
 
     if (this->num_samples_ == 0) {
       // Shouldn't happen, but let's not crash if it does.
-      this->publish_state(NAN);
+      this->publish_state("A");
       return;
     }
 
@@ -65,7 +65,7 @@ void CTClampSensor::update() {
     //}
     //esp_crypto_base64_encode(nullptr, 0, &n, reinterpret_cast<const uint8_t *>(user_info.c_str()), user_info.size());
     
-    this->publish_state(rms_ac);
+    this->publish_state("A");
   });
 
   // Set sampling values
