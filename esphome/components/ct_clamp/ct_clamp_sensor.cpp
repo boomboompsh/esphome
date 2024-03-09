@@ -49,12 +49,12 @@ void CTClampSensor::update() {
     ESP_LOGD(TAG, "'%s' - Raw AC Value: %.3fA after %d different samples (%d SPS) %d", this->name_.c_str(), rms_ac,
              this->num_samples_, 1000 * this->num_samples_ / this->sample_duration_, ms);
     const char *input = (char*)this->waveform.data();
-    unsigned char* output = malloc(this->waveform.size()*sizeof(float)*4/3+10;
+    unsigned char* output = malloc(this->waveform.size()*sizeof(float)*4/3+10);
     size_t outlen;
 
     esp_crypto_base64_encode(output, 64, &outlen, (unsigned char*)input, this->waveform.size()*sizeof(float));
     ESP_LOGD(TAG,"%s",output);
-    free(output)
+    free(output);
     //for(int i=0; i < this->waveform.size(); i++){
     //  ESP_LOGD(TAG, "%d,%.3f,%.1f%%",this->sample_times[i],this->waveform[i],(float)i/this->num_samples_*100);
     //}
