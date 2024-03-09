@@ -2,6 +2,10 @@
 
 #include "esphome/core/log.h"
 #include <cmath>
+#include <sched.h>
+#include <time.h>
+#include <cmath>
+#include <cstdlib>
 
 namespace esphome {
 namespace ct_clamp {
@@ -37,8 +41,12 @@ void CTClampSensor::update() {
     float rms_ac = 0;
     if (rms_ac_squared > 0)
       rms_ac = std::sqrt(rms_ac_squared);
-    ESP_LOGD(TAG, "'%s' - Raw AC Value: %.3fA after %d different samples (%d SPS)", this->name_.c_str(), rms_ac,
-             this->num_samples_, 1000 * this->num_samples_ / this->sample_duration_);
+    struct timespec spec;
+    clock_gettime(CLOCK_MONOTONIC, &spec);
+    time_t seconds = spec.tv_sec;
+    uint32_t ms = round(spec.tv_nsec / 1e6);
+    ESP_LOGD(TAG, "'%s' - Raw AC Value: %.3fA after %d different samples (%d SPS) %d", this->name_.c_str(), rms_ac,
+             this->num_samples_, 1000 * this->num_samples_ / this->sample_duration_, ms);
     this->publish_state(rms_ac);
   });
 
