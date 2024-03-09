@@ -4,6 +4,7 @@
 #include "esphome/core/hal.h"
 #include "esphome/components/sensor/sensor.h"
 #include "esphome/components/voltage_sampler/voltage_sampler.h"
+#include "esphome/components/text_sensor/text_sensor.h"
 #include <vector>
 
 namespace esphome {
