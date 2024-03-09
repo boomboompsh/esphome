@@ -15,7 +15,7 @@ CODEOWNERS = ["@jesserockz"]
 CONF_SAMPLE_DURATION = "sample_duration"
 
 ct_clamp_ns = cg.esphome_ns.namespace("ct_clamp")
-CTClampSensor = ct_clamp_ns.class_("CTClampSensor", text_sensor.TextSensor, cg.PollingComponent)
+CTClampSensor = ct_clamp_ns.class_("CTClampSensor", text_sensor.TextSensor, cg.PollingComponent, cg.Component)
 
 CONFIG_SCHEMA = (
     text_sensor.text_sensor_schema()
