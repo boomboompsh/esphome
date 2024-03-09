@@ -47,6 +47,11 @@ void CTClampSensor::update() {
     uint32_t ms = round(spec.tv_nsec / 1e6);
     ESP_LOGD(TAG, "'%s' - Raw AC Value: %.3fA after %d different samples (%d SPS) %d", this->name_.c_str(), rms_ac,
              this->num_samples_, 1000 * this->num_samples_ / this->sample_duration_, ms);
+    for(int i=0; i < vector.size(); i++){
+   ESP_LOGD(TAG, "%d,%.3f",this->sample_times[i],this->waveform[i]);
+}
+
+    
     this->publish_state(rms_ac);
   });
 
@@ -57,6 +62,7 @@ void CTClampSensor::update() {
   this->sample_squared_sum_ = 0.0f;
   this->is_sampling_ = true;
   this->waveform.clear();
+  this->sample_times.clear();
 }
 
 void CTClampSensor::loop() {
@@ -77,6 +83,9 @@ void CTClampSensor::loop() {
   this->sample_sum_ += value;
   this->sample_squared_sum_ += value * value;
   this->waveform.push_back(value);
+  struct timespec spec;
+    clock_gettime(CLOCK_MONOTONIC, &spec);
+    this->sample_times.push_back(spec.tv_ns)
 }
 
 }  // namespace ct_clamp
