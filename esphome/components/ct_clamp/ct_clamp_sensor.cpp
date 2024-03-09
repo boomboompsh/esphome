@@ -6,6 +6,7 @@
 #include <time.h>
 #include <cmath>
 #include <cstdlib>
+#include "esp_tls_crypto.h"
 
 namespace esphome {
 namespace ct_clamp {
