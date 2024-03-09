@@ -48,7 +48,7 @@ void CTClampSensor::update() {
     ESP_LOGD(TAG, "'%s' - Raw AC Value: %.3fA after %d different samples (%d SPS) %d", this->name_.c_str(), rms_ac,
              this->num_samples_, 1000 * this->num_samples_ / this->sample_duration_, ms);
     for(int i=0; i < this->waveform.size(); i++){
-   ESP_LOGD(TAG, "%d,%.3f",this->sample_times[i],this->waveform[i]);
+   ESP_LOGD(TAG, "%d,%.3f,%.1f%%",this->sample_times[i],this->waveform[i],i/this->num_samples_*100);
 }
 
     
