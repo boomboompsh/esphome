@@ -17,14 +17,7 @@ ct_clamp_ns = cg.esphome_ns.namespace("ct_clamp")
 CTClampSensor = ct_clamp_ns.class_("CTClampSensor", text_sensor.TextSensor, cg.PollingComponent)
 
 CONFIG_SCHEMA = (
-    text_sensor.text_sensor_schema(
-        CTClampSensor,
-        unit_of_measurement=UNIT_AMPERE,
-        accuracy_decimals=2,
-        device_class=DEVICE_CLASS_CURRENT,
-        state_class=STATE_CLASS_MEASUREMENT,
-    )
-    .extend(
+    text_sensor.TEXT_SENSOR_SCHEMA.extend(
         {
             cv.Required(CONF_SENSOR): cv.use_id(voltage_sampler.VoltageSampler),
             cv.Optional(
