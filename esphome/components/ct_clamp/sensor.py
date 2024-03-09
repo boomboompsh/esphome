@@ -19,6 +19,7 @@ CTClampSensor = ct_clamp_ns.class_("CTClampSensor", text_sensor.TextSensor, cg.P
 CONFIG_SCHEMA = (
     text_sensor.TEXT_SENSOR_SCHEMA.extend(
         {
+            cv.GenerateID(): cv.declare_id(CTClampSensor),
             cv.Required(CONF_SENSOR): cv.use_id(voltage_sampler.VoltageSampler),
             cv.Optional(
                 CONF_SAMPLE_DURATION, default="200ms"
