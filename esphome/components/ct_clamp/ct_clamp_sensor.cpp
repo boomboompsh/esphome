@@ -56,6 +56,7 @@ void CTClampSensor::update() {
   this->sample_sum_ = 0.0f;
   this->sample_squared_sum_ = 0.0f;
   this->is_sampling_ = true;
+  this->waveform.clear();
 }
 
 void CTClampSensor::loop() {
@@ -75,6 +76,7 @@ void CTClampSensor::loop() {
   this->num_samples_++;
   this->sample_sum_ += value;
   this->sample_squared_sum_ += value * value;
+  this->waveform.push_back(value);
 }
 
 }  // namespace ct_clamp
