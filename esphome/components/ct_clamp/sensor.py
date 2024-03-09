@@ -1,11 +1,12 @@
 import esphome.codegen as cg
 import esphome.config_validation as cv
-from esphome.components import sensor, voltage_sampler
+from esphome.components import text_sensor, voltage_sampler
 from esphome.const import (
     CONF_SENSOR,
     DEVICE_CLASS_CURRENT,
     STATE_CLASS_MEASUREMENT,
     UNIT_AMPERE,
+    CONF_SENSOR_DATAPOINT
 )
 
 AUTO_LOAD = ["voltage_sampler"]
@@ -14,16 +15,10 @@ CODEOWNERS = ["@jesserockz"]
 CONF_SAMPLE_DURATION = "sample_duration"
 
 ct_clamp_ns = cg.esphome_ns.namespace("ct_clamp")
-CTClampSensor = ct_clamp_ns.class_("CTClampSensor", sensor.Sensor, cg.PollingComponent)
+CTClampSensor = ct_clamp_ns.class_("CTClampSensor", text_sensor.TextSensor, cg.PollingComponent)
 
 CONFIG_SCHEMA = (
-    sensor.sensor_schema(
-        CTClampSensor,
-        unit_of_measurement=UNIT_AMPERE,
-        accuracy_decimals=2,
-        device_class=DEVICE_CLASS_CURRENT,
-        state_class=STATE_CLASS_MEASUREMENT,
-    )
+    text_sensor.text_sensor_schema()
     .extend(
         {
             cv.Required(CONF_SENSOR): cv.use_id(voltage_sampler.VoltageSampler),
@@ -37,7 +32,7 @@ CONFIG_SCHEMA = (
 
 
 async def to_code(config):
-    var = await sensor.new_sensor(config)
+    var = await text_sensor.new_text_sensor(config)
     await cg.register_component(var, config)
 
     sens = await cg.get_variable(config[CONF_SENSOR])
