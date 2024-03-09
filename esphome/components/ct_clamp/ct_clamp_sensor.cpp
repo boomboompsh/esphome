@@ -85,7 +85,7 @@ void CTClampSensor::loop() {
   this->waveform.push_back(value);
   struct timespec spec;
     clock_gettime(CLOCK_MONOTONIC, &spec);
-    this->sample_times.push_back(spec.tv_ns)
+    this->sample_times.push_back(spec.tv_nsec)
 }
 
 }  // namespace ct_clamp
