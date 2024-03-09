@@ -4,6 +4,7 @@
 #include "esphome/core/hal.h"
 #include "esphome/components/sensor/sensor.h"
 #include "esphome/components/voltage_sampler/voltage_sampler.h"
+#include <vector>
 
 namespace esphome {
 namespace ct_clamp {
@@ -48,6 +49,7 @@ class CTClampSensor : public sensor::Sensor, public PollingComponent {
   float sample_squared_sum_ = 0.0f;
   uint32_t num_samples_ = 0;
   bool is_sampling_ = false;
+  std::vector<float> waveform;
 };
 
 }  // namespace ct_clamp
