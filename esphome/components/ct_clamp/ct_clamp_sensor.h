@@ -9,7 +9,7 @@
 namespace esphome {
 namespace ct_clamp {
 
-class CTClampSensor : public sensor::Sensor, public PollingComponent {
+class CTClampSensor : public text_sensor::TextSensor, public PollingComponent {
  public:
   void update() override;
   void loop() override;
