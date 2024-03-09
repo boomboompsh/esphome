@@ -18,7 +18,7 @@ class CTClampSensor : public sensor::Sensor, public PollingComponent {
     // After the base sensor has been initialized
     return setup_priority::DATA - 1.0f;
   }
-  esp_crypto_base64_encode(nullptr, 0, &n, reinterpret_cast<const uint8_t *>(user_info.c_str()), user_info.size());
+
   void set_sample_duration(uint32_t sample_duration) { sample_duration_ = sample_duration; }
   void set_source(voltage_sampler::VoltageSampler *source) { source_ = source; }
 
