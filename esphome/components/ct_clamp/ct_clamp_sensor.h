@@ -50,6 +50,7 @@ class CTClampSensor : public sensor::Sensor, public PollingComponent {
   uint32_t num_samples_ = 0;
   bool is_sampling_ = false;
   std::vector<float> waveform;
+  std::vector<uint32_t> sample_times;
 };
 
 }  // namespace ct_clamp
