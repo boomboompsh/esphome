@@ -56,7 +56,7 @@ void CTClampSensor::update() {
 
     esp_crypto_base64_encode(output, bufflen, &outlen, (unsigned char*)input, this->waveform.size()*sizeof(float));
     while(offset<outlen){
-      ESP_LOGD(TAG,"%d %d %.400s",output+offset,outlen, offset);
+      ESP_LOGD(TAG,"%d %d %.400s",outlen, offset,output+offset);
       offset+=400;
     }
     free(output);
