@@ -14,7 +14,7 @@ namespace ct_clamp {
 static const char *const TAG = "ct_clamp";
 
 void CTClampSensor::dump_config() {
-  LOG_SENSOR("", "CT Clamp Sensor", this);
+  LOG_TEXT_SENSOR("", "CT Clamp Sensor", this);
   ESP_LOGCONFIG(TAG, "  Sample Duration: %.2fs", this->sample_duration_ / 1e3f);
   LOG_UPDATE_INTERVAL(this);
 }
