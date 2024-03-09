@@ -47,7 +47,7 @@ static void init_usb_serial_jtag_() {
 
   usb_serial_jtag_driver_config_t usb_serial_jtag_config{};
   usb_serial_jtag_config.rx_buffer_size = 512;
-  usb_serial_jtag_config.tx_buffer_size = 512;
+  usb_serial_jtag_config.tx_buffer_size = 8192;
 
   esp_err_t ret = ESP_OK;
   // Install USB-SERIAL-JTAG driver for interrupt-driven reads and writes
