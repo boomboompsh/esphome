@@ -48,7 +48,7 @@ void CTClampSensor::update() {
     uint32_t ms = round(spec.tv_nsec / 1e6);
     ESP_LOGD(TAG, "'%s' - Raw AC Value: %.3fA after %d different samples (%d SPS) %d", this->name_.c_str(), rms_ac,
              this->num_samples_, 1000 * this->num_samples_ / this->sample_duration_, ms);
-    const char *input = "ABCD123";
+    const unsigned char *input = "ABCD123";
     unsigned char output[64];
     size_t outlen;
 
