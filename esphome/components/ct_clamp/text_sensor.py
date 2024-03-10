@@ -9,6 +9,7 @@ from esphome.components import text_sensor
 from esphome.components.text_sensor import TextSensorPublishAction
 from esphome.const import CONF_ID, CONF_LAMBDA, CONF_STATE, CONF_SENSOR
 
+CONF_SAMPLE_DURATION = "sample_duration"
 CTClampSensor = ct_clamp_ns.class_(
     "CTClampSensor", text_sensor.TextSensor, cg.PollingComponent
 )
