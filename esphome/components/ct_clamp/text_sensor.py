@@ -28,8 +28,3 @@ async def to_code(config):
     var = await text_sensor.new_text_sensor(config)
     await cg.register_component(var, config)
 
-    if CONF_LAMBDA in config:
-        template_ = await cg.process_lambda(
-            config[CONF_LAMBDA], [], return_type=cg.optional.template(cg.std_string)
-        )
-        cg.add(var.set_template(template_))
