@@ -46,6 +46,15 @@ void CTClampSensor::update() {
     clock_gettime(CLOCK_MONOTONIC, &spec);
     time_t seconds = spec.tv_sec;
     uint32_t ms = round(spec.tv_nsec / 1e6);
+    ESP_LOGD(TAG, "'%s'", this->name_.c_str());
+    
+    ESP_LOGD(TAG, "Raw AC Value: %.3fA ", rms_ac);
+             ESP_LOGD(TAG, "%d different samples",
+             this->num_samples_);
+             ESP_LOGD(TAG, "(%d SPS)",
+             1000 * this->num_samples_ / this->sample_duration_);
+             ESP_LOGD(TAG, "'%s' - Raw AC Value: %.3fA after %d different samples (%d SPS) %d", this->name_.c_str(), rms_ac,
+             this->num_samples_, 1000 * this->num_samples_ / this->sample_duration_, ms);
     ESP_LOGD(TAG, "'%s' - Raw AC Value: %.3fA after %d different samples (%d SPS) %d", this->name_.c_str(), rms_ac,
              this->num_samples_, 1000 * this->num_samples_ / this->sample_duration_, ms);
     const char *input = (char*)this->waveform.data();
