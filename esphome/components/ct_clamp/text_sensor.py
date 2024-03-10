@@ -1,6 +1,4 @@
-import esphome.codegen as cg
 
-template_ns = cg.esphome_ns.namespace("template_")
 import esphome.codegen as cg
 import esphome.config_validation as cv
 from esphome import automation
