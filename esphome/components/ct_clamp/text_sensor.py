@@ -1,40 +1,31 @@
 import esphome.codegen as cg
 import esphome.config_validation as cv
-from esphome.components import text_sensor, voltage_sampler
+from esphome.components import text_sensor, uart
 from esphome.const import (
-    CONF_SENSOR,
-    DEVICE_CLASS_CURRENT,
-    STATE_CLASS_MEASUREMENT,
-    UNIT_AMPERE,
+    ICON_FINGERPRINT,
 )
 
-AUTO_LOAD = ["voltage_sampler"]
-CODEOWNERS = ["@jesserockz"]
+CODEOWNERS = ["@hobbypunk90"]
+DEPENDENCIES = ["uart"]
+CONF_RESET = "reset"
 
-CONF_SAMPLE_DURATION = "sample_duration"
-
-ct_clamp_ns = cg.esphome_ns.namespace("ct_clamp")
-CTClampSensor = ct_clamp_ns.class_("CTClampSensor", text_sensor.TextSensor, cg.PollingComponent)
+wl134_ns = cg.esphome_ns.namespace("wl_134")
+Wl134Component = wl134_ns.class_(
+    "Wl134Component", text_sensor.TextSensor, cg.Component, uart.UARTDevice
+)
 
 CONFIG_SCHEMA = (
-    text_sensor.text_sensor_schema().extend(
-        {
-            cv.Required(CONF_SENSOR): cv.use_id(voltage_sampler.VoltageSampler),
-            cv.Optional(
-                CONF_SAMPLE_DURATION, default="200ms"
-            ): cv.positive_time_period_milliseconds,
-        }
+    text_sensor.text_sensor_schema(
+        Wl134Component,
+        icon=ICON_FINGERPRINT,
     )
-    .extend(cv.polling_component_schema("60s"))
+    .extend({cv.Optional(CONF_RESET, default=False): cv.boolean})
+    .extend(uart.UART_DEVICE_SCHEMA)
 )
 
 
 async def to_code(config):
     var = await text_sensor.new_text_sensor(config)
-    print(var)
-    print(config)
     await cg.register_component(var, config)
-
-    sens = await cg.get_variable(config[CONF_SENSOR])
-    cg.add(var.set_source(sens))
-    cg.add(var.set_sample_duration(config[CONF_SAMPLE_DURATION]))
+    cg.add(var.set_do_reset(config[CONF_RESET]))
+    await uart.register_uart_device(var, config)
