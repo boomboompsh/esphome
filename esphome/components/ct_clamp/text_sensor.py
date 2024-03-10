@@ -1,31 +1,53 @@
 import esphome.codegen as cg
+
+template_ns = cg.esphome_ns.namespace("template_")
+import esphome.codegen as cg
 import esphome.config_validation as cv
-from esphome.components import text_sensor, uart
-from esphome.const import (
-    ICON_FINGERPRINT,
-)
+from esphome import automation
+from esphome.components import text_sensor
+from esphome.components.text_sensor import TextSensorPublishAction
+from esphome.const import CONF_ID, CONF_LAMBDA, CONF_STATE
 
-CODEOWNERS = ["@hobbypunk90"]
-DEPENDENCIES = ["uart"]
-CONF_RESET = "reset"
-
-wl134_ns = cg.esphome_ns.namespace("wl_134")
-Wl134Component = wl134_ns.class_(
-    "Wl134Component", text_sensor.TextSensor, cg.Component, uart.UARTDevice
+TemplateTextSensor = template_ns.class_(
+    "TemplateTextSensor", text_sensor.TextSensor, cg.PollingComponent
 )
 
 CONFIG_SCHEMA = (
-    text_sensor.text_sensor_schema(
-        Wl134Component,
-        icon=ICON_FINGERPRINT,
+    text_sensor.text_sensor_schema()
+    .extend(
+        {
+            cv.GenerateID(): cv.declare_id(TemplateTextSensor),
+            cv.Optional(CONF_LAMBDA): cv.returning_lambda,
+        }
     )
-    .extend({cv.Optional(CONF_RESET, default=False): cv.boolean})
-    .extend(uart.UART_DEVICE_SCHEMA)
+    .extend(cv.polling_component_schema("60s"))
 )
 
 
 async def to_code(config):
     var = await text_sensor.new_text_sensor(config)
     await cg.register_component(var, config)
-    cg.add(var.set_do_reset(config[CONF_RESET]))
-    await uart.register_uart_device(var, config)
+
+    if CONF_LAMBDA in config:
+        template_ = await cg.process_lambda(
+            config[CONF_LAMBDA], [], return_type=cg.optional.template(cg.std_string)
+        )
+        cg.add(var.set_template(template_))
+
+
+@automation.register_action(
+    "text_sensor.template.publish",
+    TextSensorPublishAction,
+    cv.Schema(
+        {
+            cv.Required(CONF_ID): cv.use_id(text_sensor.TextSensor),
+            cv.Required(CONF_STATE): cv.templatable(cv.string_strict),
+        }
+    ),
+)
+async def text_sensor_template_publish_to_code(config, action_id, template_arg, args):
+    paren = await cg.get_variable(config[CONF_ID])
+    var = cg.new_Pvariable(action_id, template_arg, paren)
+    template_ = await cg.templatable(config[CONF_STATE], args, cg.std_string)
+    cg.add(var.set_state(template_))
+    return var
