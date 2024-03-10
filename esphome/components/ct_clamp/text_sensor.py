@@ -18,6 +18,7 @@ CONFIG_SCHEMA = (
     text_sensor.text_sensor_schema()
     .extend(
         {
+            cv.GenerateID(): cv.declare_id(CTClampSensor),
             cv.Required(CONF_SENSOR): cv.use_id(voltage_sampler.VoltageSampler),
             cv.Optional(
                 CONF_SAMPLE_DURATION, default="200ms"
