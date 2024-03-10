@@ -36,4 +36,4 @@ async def to_code(config):
     await cg.register_component(var, config)
     sens = await cg.get_variable(config[CONF_SENSOR])
     cg.add(var.set_source(sens))
-
+    cg.add(var.set_sample_duration(config[CONF_SAMPLE_DURATION]))
