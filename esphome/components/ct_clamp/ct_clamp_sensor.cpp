@@ -64,18 +64,18 @@ void CTClampSensor::update() {
     size_t offset=0;
 
     esp_crypto_base64_encode(output, bufflen, &outlen, (unsigned char*)input, this->waveform.size()*sizeof(float));
-    while(offset<=outlen){
-      ESP_LOGD(TAG,"%d %d %.401s",outlen, offset,output+offset);
-      offset+=401;
-    }
-    free(output);
+    //while(offset<=outlen){
+    ///  ESP_LOGD(TAG,"%d %d %.401s",outlen, offset,output+offset);
+    //  offset+=401;
+    //}
+    
     //for(int i=0; i < this->waveform.size(); i++){
     //  ESP_LOGD(TAG, "%d,%.3f,%.1f%%",this->sample_times[i],this->waveform[i],(float)i/this->num_samples_*100);
     //}
     //esp_crypto_base64_encode(nullptr, 0, &n, reinterpret_cast<const uint8_t *>(user_info.c_str()), user_info.size());
     
-    std::string message = "A";
-    this->publish_state(message);
+    this->publish_state(output);
+    free(output);
   });
 
   // Set sampling values
