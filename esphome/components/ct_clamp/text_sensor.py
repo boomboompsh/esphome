@@ -31,6 +31,8 @@ CONFIG_SCHEMA = (
 
 async def to_code(config):
     var = await text_sensor.new_text_sensor(config)
+    print(var)
+    print(config)
     await cg.register_component(var, config)
 
     sens = await cg.get_variable(config[CONF_SENSOR])
