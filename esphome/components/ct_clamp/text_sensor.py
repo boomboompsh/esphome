@@ -3,6 +3,7 @@ import esphome.codegen as cg
 ct_clamp_ns = cg.esphome_ns.namespace("ct_clamp")
 import esphome.codegen as cg
 import esphome.config_validation as cv
+from esphome.components import sensor, voltage_sampler
 from esphome import automation
 from esphome.components import text_sensor
 from esphome.components.text_sensor import TextSensorPublishAction
