@@ -8,8 +8,8 @@ from esphome.components import text_sensor
 from esphome.components.text_sensor import TextSensorPublishAction
 from esphome.const import CONF_ID, CONF_LAMBDA, CONF_STATE
 
-CTClampTextSensor = ct_clamp_ns.class_(
-    "CTClampTextSensor", text_sensor.TextSensor, cg.PollingComponent
+CTClampSensor = ct_clamp_ns.class_(
+    "CTClampSensor", text_sensor.TextSensor, cg.PollingComponent
 )
 
 CONFIG_SCHEMA = (
