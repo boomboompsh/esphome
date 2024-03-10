@@ -6,7 +6,7 @@ import esphome.config_validation as cv
 from esphome import automation
 from esphome.components import text_sensor
 from esphome.components.text_sensor import TextSensorPublishAction
-from esphome.const import CONF_ID, CONF_LAMBDA, CONF_STATE
+from esphome.const import CONF_ID, CONF_LAMBDA, CONF_STATE, CONF_SENSOR
 
 CTClampSensor = ct_clamp_ns.class_(
     "CTClampSensor", text_sensor.TextSensor, cg.PollingComponent
