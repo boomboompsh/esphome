@@ -16,7 +16,7 @@ CONFIG_SCHEMA = (
     text_sensor.text_sensor_schema()
     .extend(
         {
-            cv.GenerateID(): cv.declare_id(CTClampTextSensor),
+            cv.GenerateID(): cv.declare_id(CTClampSensor),
             cv.Optional(CONF_LAMBDA): cv.returning_lambda,
         }
     )
