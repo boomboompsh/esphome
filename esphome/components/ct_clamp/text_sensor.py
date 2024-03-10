@@ -18,7 +18,7 @@ CONFIG_SCHEMA = (
     text_sensor.text_sensor_schema()
     .extend(
         {
-            #cv.Required(CONF_SENSOR): cv.use_id(voltage_sampler.VoltageSampler),
+            cv.Required(CONF_SENSOR): cv.use_id(voltage_sampler.VoltageSampler),
             cv.Optional(
                 CONF_SAMPLE_DURATION, default="200ms"
             ): cv.positive_time_period_milliseconds,
@@ -30,5 +30,7 @@ CONFIG_SCHEMA = (
 
 async def to_code(config):
     var = await text_sensor.new_text_sensor(config)
+    print(var)
+    print(config)
     await cg.register_component(var, config)
 
