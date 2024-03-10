@@ -73,8 +73,8 @@ void CTClampSensor::update() {
     //  ESP_LOGD(TAG, "%d,%.3f,%.1f%%",this->sample_times[i],this->waveform[i],(float)i/this->num_samples_*100);
     //}
     //esp_crypto_base64_encode(nullptr, 0, &n, reinterpret_cast<const uint8_t *>(user_info.c_str()), user_info.size());
-    
-    this->publish_state(output);
+    std::string data = output;
+    this->publish_state(data);
     free(output);
   });
 
