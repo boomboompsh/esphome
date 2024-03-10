@@ -17,9 +17,8 @@ ct_clamp_ns = cg.esphome_ns.namespace("ct_clamp")
 CTClampSensor = ct_clamp_ns.class_("CTClampSensor", text_sensor.TextSensor, cg.PollingComponent)
 
 CONFIG_SCHEMA = (
-    text_sensor.TEXT_SENSOR_SCHEMA.extend(
+    text_sensor.text_sensor_schema().extend(
         {
-            cv.GenerateID(): cv.declare_id(CTClampSensor),
             cv.Required(CONF_SENSOR): cv.use_id(voltage_sampler.VoltageSampler),
             cv.Optional(
                 CONF_SAMPLE_DURATION, default="200ms"
