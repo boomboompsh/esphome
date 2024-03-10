@@ -35,16 +35,7 @@ async def to_code(config):
         cg.add(var.set_template(template_))
 
 
-@automation.register_action(
-    "text_sensor.template.publish",
-    TextSensorPublishAction,
-    cv.Schema(
-        {
-            cv.Required(CONF_ID): cv.use_id(text_sensor.TextSensor),
-            cv.Required(CONF_STATE): cv.templatable(cv.string_strict),
-        }
-    ),
-)
+
 async def text_sensor_template_publish_to_code(config, action_id, template_arg, args):
     paren = await cg.get_variable(config[CONF_ID])
     var = cg.new_Pvariable(action_id, template_arg, paren)
