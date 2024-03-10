@@ -64,8 +64,9 @@ void CTClampSensor::update() {
     //  ESP_LOGD(TAG, "%d,%.3f,%.1f%%",this->sample_times[i],this->waveform[i],(float)i/this->num_samples_*100);
     //}
     //esp_crypto_base64_encode(nullptr, 0, &n, reinterpret_cast<const uint8_t *>(user_info.c_str()), user_info.size());
-    ESP_LOGD(TAG,"got to here");
-    this->publish_state("A");
+    
+    std::string message = "A";
+    this->publish_state(message);
   });
 
   // Set sampling values
@@ -79,26 +80,30 @@ void CTClampSensor::update() {
 }
 
 void CTClampSensor::loop() {
+  ESP_LOGD(TAG,"1");
   if (!this->is_sampling_)
     return;
-
+ESP_LOGD(TAG,"1");
   // Perform a single sample
   float value = this->source_->sample();
+  ESP_LOGD(TAG,"2");
   if (std::isnan(value))
     return;
-
+ESP_LOGD(TAG,"3");
   // Assuming a sine wave, avoid requesting values faster than the ADC can provide them
   //if (this->last_value_ == value)
   //  return;
   this->last_value_ = value;
-
+ESP_LOGD(TAG,"4");
   this->num_samples_++;
   this->sample_sum_ += value;
   this->sample_squared_sum_ += value * value;
   this->waveform.push_back(value);
+  ESP_LOGD(TAG,"5");
   struct timespec spec;
     clock_gettime(CLOCK_MONOTONIC, &spec);
     this->sample_times.push_back(spec.tv_nsec);
+    ESP_LOGD(TAG,"6");
 }
 
 }  // namespace ct_clamp
