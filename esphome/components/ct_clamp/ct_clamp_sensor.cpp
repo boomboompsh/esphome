@@ -21,7 +21,7 @@ void CTClampSensor::dump_config() {
 
 void CTClampSensor::update() {
   // Update only starts the sampling phase, in loop() the actual sampling is happening.
-
+  ESP_LOGD(TAG,"7");
   // Request a high loop() execution interval during sampling phase.
   this->high_freq_.start();
 
